@@ -1,0 +1,43 @@
+<mat-card class="example-card">
+
+  <mat-card-content>
+    <h1 *ngIf="authService.isLoggedIn()"> Welcome, {{authService.getCurrentUsername()}}! </h1>
+  </mat-card-content>
+
+  <img class="center" src="assets/img/home_image.png" alt="home">
+
+  <mat-card-actions>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login">
+          <mat-icon>exit_to_app</mat-icon>
+          Login
+        </a>
+      </mat-list-item>
+
+
+      <mat-list-item role="listitem" *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/registration">
+          <mat-icon>person_add</mat-icon>
+          Registration
+        </a>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" *ngIf="authService.isLoggedIn()">
+        <a routerLink="/search">
+          <mat-icon>search</mat-icon>
+          Search
+        </a>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" *ngIf="authService.isLoggedIn()">
+        <a routerLink="/upload-download">
+          <mat-icon>import_export</mat-icon>
+          Upload-Download
+        </a>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-card-actions>
+
+</mat-card>

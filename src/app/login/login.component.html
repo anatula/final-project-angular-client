@@ -1,0 +1,50 @@
+<!-- comment -->
+
+<mat-card class="example-card">
+
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <form class="example-form" #f="ngForm" (ngSubmit)="signIn(f.value)">
+
+      <table class="example-full-width" cellspacing="0">
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Username" name="username" id="username" required ngModel>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Password" type="password" name="password" id="password" required [type]="hide ? 'password':'text'"
+                ngModel>
+              <mat-icon matSuffix (click)="hide = !hide">
+                {{hide ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="!f.form.valid">Login</button>
+
+    </form>
+
+    <div *ngIf="invalidLogin" class="alert alert-danger">
+      Invalid username and/or password.
+    </div>
+
+    <mat-spinner class="example-margin" *ngIf="logging" diameter="30" strokeWidth="5">
+    </mat-spinner>
+
+  </mat-card-content>
+
+</mat-card>

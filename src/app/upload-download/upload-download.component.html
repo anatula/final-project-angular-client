@@ -1,0 +1,97 @@
+<!--Upload file Section-->
+<div>
+  <mat-card>
+    
+    <mat-card-title> Upload a file </mat-card-title>
+
+    <div> <input #inputFile type='file' (change)="fileChanged()"> </div>
+
+    <button mat-raised-button color="primary" class="example-margin" [disabled]="invalidfile" (click)='submit()'> Upload </button>
+  
+    <button mat-raised-button [disabled]="invalidfile" (click)='reset()'> Delete </button>
+
+      <mat-spinner
+        class="example-margin"
+        *ngIf="uploading"
+        diameter="30" 
+        strokeWidth="5">
+      </mat-spinner>
+
+  </mat-card>
+</div>
+
+
+<!--Uploaded and download files Section-->
+<div>
+
+  <mat-card>
+    
+    <mat-card-title>
+      Uploaded files
+    </mat-card-title>
+
+    <div class="container">
+      
+      <ul>
+        <mat-accordion>
+          <li *ngFor="let file of files">
+                  <p class="mat-body"> Id: {{file.id}}</p>
+                  <button mat-raised-button (click)='downloadFile(file.id)'> Download</button>
+                  <button mat-raised-button (click)='deleteFile(file.id)'  > Delete</button>
+                  <button mat-raised-button [routerLink]="['/map-positions-file', file.id]"> View </button>
+                  <mat-icon matBadge="{{file.counter}}" matBadge matBadgeColor="warn">add_shopping_cart</mat-icon>
+          </li>
+
+        </mat-accordion>
+      </ul>
+      
+      <p *ngIf="(downloadingListOwned === false && files.length === 0 )">
+        <strong>The user did not upload any files.</strong>
+      </p>
+
+      <mat-spinner
+      class="example-margin"
+      *ngIf="downloadingListOwned"
+      diameter="30" 
+      strokeWidth="5">
+    </mat-spinner>
+
+    </div>
+  </mat-card>
+
+
+  <mat-card>
+    
+    <mat-card-title>
+      Purchased files
+    </mat-card-title>
+
+    <div class="container">
+      
+      <ul>
+        <mat-accordion>
+          <li *ngFor="let purchasedFile of purchasedFiles">
+                  <p class="mat-body"> Id: {{purchasedFile.id}}</p>
+                  <button mat-raised-button (click)='downloadFile(purchasedFile.id)'> Download</button>
+                  <button mat-raised-button [routerLink]="['/map-positions-file', purchasedFile.id]"> View </button>
+          </li>
+
+        </mat-accordion>
+      </ul>
+      
+      <p *ngIf="(downloadingListPurchased === false && purchasedFiles.length === 0)">
+        <strong>The user did not purchase any files.</strong>
+      </p>
+
+      <mat-spinner
+      class="example-margin"
+      *ngIf="downloadingListPurchased"
+      diameter="30" 
+      strokeWidth="5">
+    </mat-spinner>
+
+    </div>
+  </mat-card>
+
+
+</div>

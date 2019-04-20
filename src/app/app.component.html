@@ -1,0 +1,25 @@
+<!-- main app container -->
+<div mat-app-background>
+
+        <mat-toolbar color="active">
+                <a routerLink="">
+                        <mat-icon>home</mat-icon>
+                </a>
+
+                <h1 class="title-center">{{title}}</h1>
+
+                <button class="mat-button mat-small" mat-button *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="menu">{{
+                        authService.getCurrentUsername() }}</button>
+
+                <mat-menu #menu="matMenu">
+                        <a mat-menu-item [routerLink]="" (click)="logout()">
+                                <mat-icon>power_settings_new</mat-icon> Logout
+                        </a>
+                </mat-menu>
+        </mat-toolbar>
+
+        <div class="mat-typography">
+                <router-outlet></router-outlet>
+        </div>
+
+</div>

@@ -1,0 +1,80 @@
+<mat-card class="example-card">
+
+  <mat-card-header>
+    <mat-card-title>Registration</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div *ngIf="invalidRegistration" class="alert alert-danger">
+      Registration not performed.Please, try again with a different username.
+    </div>
+
+    <form class="example-form" [formGroup]="registerForm" #f="ngForm" (ngSubmit)="registerForm.valid && onRegisterSubmit(f.value)" novalidate>
+
+      <table class="example-full-width" cellspacing="0">
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Username" name="username" formControlName="username">
+            </mat-form-field>
+          </td>
+        </tr>
+        
+        <p *ngIf="registerForm.controls.username.errors?.required && registerForm.controls.username.touched">Username is required</p>
+        <p *ngIf="registerForm.controls.username.errors?.minlength">Username must be at least 4 characters</p>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="email" name="email" formControlName="email"  />
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <p *ngIf="registerForm.controls.email.errors?.required && registerForm.controls.email.touched">Email is required</p>
+        <p *ngIf="registerForm.controls.email.errors?.email">Email is invalid</p>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Password" type="password" name="password" formControlName="password"
+              [type]="hide ? 'password':'text'">
+              <mat-icon matSuffix (click)="hide = !hide">
+                {{hide ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <p *ngIf="registerForm.controls.password.errors?.required && registerForm.controls.password.touched">Password is required</p>
+        <p *ngIf="registerForm.controls.password.errors?.minlength">Password must be at least 4 characters</p>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Repeat Password" type="password" name="repeat" formControlName="repeat"
+              [type]="hide ? 'password':'text'">
+              <mat-icon matSuffix (click)="hide = !hide">
+                {{hide ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <p *ngIf="registerForm.controls.repeat.errors?.required && registerForm.controls.repeat.touched">Repetition of the password is required</p>
+        <p class="bg-danger" *ngIf="registerForm.errors?.doesMatchPassword">Password does not match</p>
+      </table>
+
+       <button mat-raised-button type="submit" color="primary" [disabled]="!registerForm.valid"> Register </button>
+    </form>
+
+    <mat-spinner
+    class="example-margin"
+    *ngIf="registering"
+    diameter="30" 
+    strokeWidth="5">
+   </mat-spinner>
+
+  </mat-card-content>
+
+</mat-card>

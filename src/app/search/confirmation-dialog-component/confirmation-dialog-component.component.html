@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Confirmation</h2>
+
+<mat-dialog-content>
+
+    <div *ngIf="filesAlreadyPurchased.length">
+            <h3 matSubheader> Files purchased previously: </h3>
+            <mat-list role="list1">
+               <mat-list-item 
+               role="listitem"
+               *ngFor="let file of filesAlreadyPurchased"
+               >
+               {{file.file.id}} {{"Count: " + file.count}}
+             </mat-list-item>
+           </mat-list>
+    </div>
+
+    <div *ngIf="filesToPurchase.length === 0">
+        <h3>No files to purchase</h3>
+    </div>
+
+    <div *ngIf="filesToPurchase.length">
+            <h3 matSubheader>Files to purchase: </h3>
+            <mat-list role="list2">
+                <mat-list-item 
+                role="listitem"
+                *ngFor="let file of filesToPurchase"
+                >
+                {{file.file.id}} {{"Count: " + file.count}}
+              </mat-list-item>
+              
+          </mat-list>
+    </div>
+
+
+  </mat-dialog-content>
+
+<mat-dialog-actions >
+    
+    <div *ngIf="filesToPurchase.length">
+        <button mat-raised-button (click)="confirm()">Confirm Purchase</button>
+        <button mat-raised-button (click)="default()">Cancel</button>
+    </div>
+
+    <div *ngIf="filesToPurchase.length === 0">
+            <button mat-raised-button (click)="default()">OK</button>
+    </div>
+    
+</mat-dialog-actions>

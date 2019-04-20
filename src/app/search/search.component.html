@@ -1,0 +1,118 @@
+<mat-card>
+
+    <mat-card-content>
+        
+      <div
+        leaflet
+        id="map-id"
+        leafletDraw style="height: 400px;"
+        (leafletMapReady)="onMapReady($event)"
+        [leafletOptions]="options"
+        [leafletDrawOptions]="drawPluginOptions">
+      </div>
+      
+    </mat-card-content>
+
+    <mat-vertical-stepper linear #stepper>
+        
+        <mat-step label="Step 1" [completed]="step1Completed">
+          
+          <ng-template matStepLabel>Draw a polygon in the map</ng-template>            
+          
+          <mat-chip-list> 
+            <mat-chip color="accent" selected><b>Count:  </b> {{polygonCounter}}</mat-chip>
+          </mat-chip-list>
+
+            <button
+             class="example-margin"
+              mat-raised-button
+              matStepperNext>
+              Next
+           </button>
+        </mat-step>
+
+        <mat-step [completed]="step2Completed">
+
+            <form [formGroup]="datePickerForm">
+      
+              <ng-template matStepLabel>Filter by date </ng-template>
+      
+              <mat-form-field style="padding-right: 20px;">
+                <input #startInput matInput [matDatepicker]="picker1" placeholder="Start date" formControlName="startDate" required (dateChange)="updateDate($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+      
+              <mat-form-field>
+                <input #endInput matInput [matDatepicker]="picker2" placeholder="End date" formControlName="endDate" required (dateChange)="updateDate($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+      
+              <div *ngIf="datePickerForm.hasError('dates')">End date can't be a date after Start Date</div>
+      
+
+              <mat-chip-list> 
+                <mat-chip color="accent" selected><b>Count:  </b> {{timestampCounter}}</mat-chip>
+              </mat-chip-list>
+
+              <div>
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext> Next </button>
+              </div>
+      
+            </form>
+      
+          </mat-step>
+
+          <mat-step [stepControl]="selectionListForm">
+              <ng-template matStepLabel>Filter by users </ng-template>
+        
+              <div *ngIf="users$ | async as userItems; else loadingOrError">
+
+                  <div *ngIf="(userItems !== undefined || userItems.length > 0)">
+        
+                <mat-selection-list #listUsers >
+                  <mat-list-option  *ngFor="let user of userItems" [value]="user.id">
+                    {{user.username}}
+                  </mat-list-option>
+                </mat-selection-list>
+        
+  
+                <p>
+                  Users selected: {{listUsers.selectedOptions.selected.length}}
+                </p>
+        
+                
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary"
+                  (click)="search(listUsers.selectedOptions.selected)"
+                  [disabled]="!listUsers.selectedOptions.selected.length || polygon === undefined" > Search </button>
+                <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                
+
+                <mat-spinner *ngIf="searching" class="example-margin" diameter="30" strokeWidth="5" ></mat-spinner>
+
+              </div>
+
+              </div>
+        
+              <ng-template #loadingOrError>
+        
+                <div *ngIf="errorLoading$ | async; else loading">
+                  Error loading the list of users. Please try again later.
+                </div>
+        
+                <ng-template #loading>
+                  <mat-spinner class="example-margin" diameter="30" strokeWidth="5" ></mat-spinner>
+                </ng-template>
+        
+              </ng-template>
+        
+            </mat-step>
+              
+    </mat-vertical-stepper>
+
+
+  
+</mat-card>

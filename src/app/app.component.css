@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+  }
+  
+  mat-card {
+    max-width: 80%;
+    margin: 2em auto;
+    text-align: center;
+  }
+
+  .example-margin {
+    margin: 5px;
+}
+
+.title-center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.mat-button.mat-small {
+  min-width: 1%;
+}
+
